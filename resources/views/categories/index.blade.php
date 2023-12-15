@@ -43,17 +43,21 @@
                                 </div>
                             </td>
                             <td class="text-nowrap">
-                                <a href="{{ route('categories.edit',$category->id) }}" class="btn btn-sm btn-outline-warning">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
+                                @can('update',$category)
+                                    <a href="{{ route('categories.edit',$category->id) }}" class="btn btn-sm btn-outline-warning">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                @endcan
 
-                                <form action="{{ route('categories.destroy',$category->id) }}" method="POST" class="d-inline-block">
-                                    @csrf
-                                    @method("delete")
-                                    <button class="btn btn-sm btn-outline-danger">
-                                        <i class="bi bi-trash3"></i>
-                                    </button>
-                                </form>
+                                @can('delete',$category)
+                                    <form action="{{ route('categories.destroy',$category->id) }}" method="POST" class="d-inline-block">
+                                        @csrf
+                                        @method("delete")
+                                        <button class="btn btn-sm btn-outline-danger">
+                                            <i class="bi bi-trash3"></i>
+                                        </button>
+                                    </form>
+                                @endcan
                             </td>
                         </tr>
                     @empty

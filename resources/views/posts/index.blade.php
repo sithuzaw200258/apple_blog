@@ -69,17 +69,22 @@
                                 <i class="bi bi-info-circle"></i>
                             </a>
 
-                            <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-outline-warning">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
+                            @can('update',$post) 
+                                <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-outline-warning">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                            @endcan
 
-                            <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="d-inline-block">
-                                @csrf
-                                @method('delete')
-                                <button class="btn btn-sm btn-outline-danger">
-                                    <i class="bi bi-trash3"></i>
-                                </button>
-                            </form>
+                            @can('delete',$post)
+                                <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="d-inline-block">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash3"></i>
+                                    </button>
+                                </form>
+                            @endcan
+
                         </td>
                     </tr>
                 @empty

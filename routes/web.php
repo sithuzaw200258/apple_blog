@@ -23,10 +23,12 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resources([
-    'categories' => CategoryController::class,
-    'posts' => PostController::class,
-]);
+Route::middleware('auth')->group(function () {
+    Route::resources([
+        'categories' => CategoryController::class,
+        'posts' => PostController::class,
+    ]);
+});
 
 // Route::resource('categories', CategoryController::class);
 
