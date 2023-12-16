@@ -18,7 +18,11 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Category Title</th>
-                        <th>Created User</th>
+
+                        @notuser
+                            <th>Created User</th>
+                        @endnotuser
+
                         <th scope="col">Date & Time</th>
                         <th scope="col">Actions</th>
                     </tr>
@@ -31,7 +35,9 @@
                                 <p class="mb-0">{{ $category->title }}</p>
                                 <p class="badge text-bg-primary mb-0">{{ $category->slug }}</p>
                             </td>
-                            <td>{{  \App\Models\User::find($category->user_id)->name }}</td>
+                            @notuser
+                                <td>{{  \App\Models\User::find($category->user_id)->name }}</td>
+                            @endnotuser
                             <td class="text-nowrap">
                                 <div class="">
                                     <i class="bi bi-calendar3" style="color: rgb(51, 112, 226);"></i>

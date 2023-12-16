@@ -18,7 +18,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::latest("id")->get();
+        $categories = Category::when(Auth::user()->isUser(),function($q){
+            $q->where("user_id",Auth::id());
+        })
+        ->latest("id")->get();
         return view('categories.index',compact('categories'));
     }
 
@@ -69,6 +72,8 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        // Authorization
+        Gate::authorize('update', $category);
         return view('categories.edit',compact('category'));
     }
 

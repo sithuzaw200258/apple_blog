@@ -37,12 +37,16 @@
         <table class="table table-striped table-hover table-bordered align-middle">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Post Title</th>
-                    <th scope="col">Category</th>
-                    <th scope="col">Created User</th>
-                    <th scope="col">Date & Time</th>
-                    <th scope="col">Actions</th>
+                    <th>#</th>
+                    <th>Post Title</th>
+                    <th>Category</th>
+
+                    @notuser
+                        <th>Created User</th>
+                    @endnotuser
+
+                    <th>Date & Time</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,7 +57,11 @@
                             <p class="mb-0">{{ $post->title }}</p>
                         </td>
                         <td class="text-nowrap">{{ \App\Models\Category::find($post->category_id)->title }}</td>
-                        <td>{{ \App\Models\User::find($post->user_id)->name }}</td>
+
+                        @notuser
+                            <td>{{ \App\Models\User::find($post->user_id)->name }}</td>
+                        @endnotuser
+                        
                         <td class="text-nowrap">
                             <div class="">
                                 <i class="bi bi-calendar3" style="color: rgb(51, 112, 226);"></i>
@@ -69,13 +77,13 @@
                                 <i class="bi bi-info-circle"></i>
                             </a>
 
-                            @can('update',$post) 
+                            @can('update', $post)
                                 <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-outline-warning">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
                             @endcan
 
-                            @can('delete',$post)
+                            @can('delete', $post)
                                 <form action="{{ route('posts.destroy', $post->id) }}" method="POST" class="d-inline-block">
                                     @csrf
                                     @method('delete')

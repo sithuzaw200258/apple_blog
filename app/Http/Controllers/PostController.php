@@ -24,6 +24,9 @@ class PostController extends Controller
             $q->orWhere("title","like","%$keyword%")
             ->orWhere("description","like","%$keyword%");
         })
+        ->when(Auth::user()->isUser(),function($q){
+            $q->where("user_id",Auth::id());
+        })
         ->latest("id")
         ->paginate(10)
         ->withQueryString();
@@ -76,6 +79,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+         // Authorization
+        Gate::authorize("view",$post);
+        
         return view("posts.show",compact('post'));
     }
 
@@ -87,6 +93,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        // Authorization
+        Gate::authorize('update', $post);
+
         return view("posts.edit",compact('post'));
     }
 
