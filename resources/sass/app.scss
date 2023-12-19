@@ -10,3 +10,7 @@ $breadcrumb-divider: quote(">");
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+.gallary{
+    columns: 3 250px;
+}

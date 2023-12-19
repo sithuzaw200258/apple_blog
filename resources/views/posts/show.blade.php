@@ -11,7 +11,10 @@
 
     <div class="card">
         <div class="card-body">
-            <h5 class="text-primary fw-bolder">Post Details</h5>
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="text-primary fw-bolder">Post Details</h5>
+                <a href="{{ route('posts.index') }}" class="btn btn-sm btn-outline-secondary px-3 py-1">Back</a>
+            </div>
             <hr>
 
             <div>
@@ -26,14 +29,14 @@
                     <div class="">
                         <p class="mb-0 badge bg-primary fw-light px-2 py-1">
                             <span><i class="bi bi-layers"></i></span>
-                            {{ \App\Models\Category::find($post->category_id)->title; }}
+                            {{ $post->category->title }}
                         </p>
                     </div>
 
                     <div class="">
                         <p class="mb-0 fw-light badge bg-success">
                             <span><i class="bi bi-person-circle"></i></span>
-                            {{ \App\Models\User::find($post->user_id)->name; }}
+                            {{ $post->user->name }}
                         </p>
                     </div>
 
@@ -46,6 +49,10 @@
                     
                 </div>
                 <p class="">{{ $post->description }}</p>
+
+                @foreach ($post->photos as $photo)
+                    <img src="{{ asset('storage/'.$photo->name) }}" alt="" class="object-fit-cover" width="150" height="150">
+                @endforeach
             </div>
         </div>
     </div>

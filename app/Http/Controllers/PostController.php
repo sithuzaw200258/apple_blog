@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Photo;
+use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -27,6 +29,7 @@ class PostController extends Controller
         ->when(Auth::user()->isUser(),function($q){
             $q->where("user_id",Auth::id());
         })
+        ->with(['category','user'])
         ->latest("id")
         ->paginate(10)
         ->withQueryString();
@@ -40,7 +43,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $categories = Category::latest("id")->get();
+        return view('posts.create',compact('categories'));
     }
 
     /**
@@ -51,6 +55,8 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+
+        // Store posts to the database
         $post = new Post();
         $post->title = $request->title;
         $post->slug = Str::slug($request->title);
@@ -68,6 +74,21 @@ class PostController extends Controller
         }
 
         $post->save();
+
+        
+        foreach ($request->photos as $photo) {
+            $fileName = uniqid()."_post_photo.".$photo->extension();
+
+            // Store photos to the storage folder
+            $photo->storeAs("public",$fileName);
+
+            // Store photos to the database
+            $photo = new Photo();
+            $photo->post_id = $post->id;
+            $photo->name = $fileName;
+            $photo->save();
+        }
+        
         return redirect()->route('posts.index')->with('status',$post->title." is created successfully.");
     }
 
@@ -131,6 +152,20 @@ class PostController extends Controller
         }
 
         $post->update();
+
+        foreach ($request->photos as $photo) {
+            $fileName = uniqid()."_post_photo.".$photo->extension();
+
+            // Store photos to the storage folder
+            $photo->storeAs("public",$fileName);
+
+            // Store photos to the database
+            $photo = new Photo();
+            $photo->post_id = $post->id;
+            $photo->name = $fileName;
+            $photo->save();
+        }
+
         return redirect()->route('posts.index')->with('status',$post->title." is updated successfully.");
     }
 
@@ -149,6 +184,12 @@ class PostController extends Controller
         if(isset($post->featured_image)){
             // Delete photo
             Storage::delete("public/".$post->featured_image);
+        }
+
+        foreach ($post->photos as $photo) {
+            // Delete photo
+            Storage::delete("public/".$photo->name);
+            $photo->delete();
         }
         $post->delete();
         return redirect()->route('posts.index')->with('status',$postTitle.' is deleted successfully.');

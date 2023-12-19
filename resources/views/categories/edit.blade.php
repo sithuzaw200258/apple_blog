@@ -19,7 +19,10 @@
 
     <div class="card">
         <div class="card-body">
-            <h5 class="font-weight-bolder">Create New Category</h5>
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="fw-bolder text-primary">Edit Category</h5>
+                <a href="{{ route('categories.index') }}" class="btn btn-sm btn-outline-secondary px-3 py-1">Back</a>
+            </div>
             <hr>
             <div class="">
                 <form action="{{ route('categories.update',$category->id) }}" method="POST">
@@ -30,7 +33,7 @@
                             class="form-control @error('title') is-invalid
                         @enderror"
                             value="{{ old('title',$category->title) }}" placeholder="Enter your category title">
-                        <button class="input-group-text btn btn-primary">Update category</button>
+                        <button class="input-group-text btn btn-primary">Update Category</button>
                         @error('title')
                             <div class="invalid-feedback">
                                 {{ $message }}

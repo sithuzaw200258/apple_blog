@@ -26,8 +26,21 @@ class UpdatePostRequest extends FormRequest
         return [
             "title" => "bail|required|min:2|unique:posts,title,{$this->post->id}",
             "category" => "required|exists:categories,id",
+            "photos.*" => "mimes:png,jpg,jpeg|min:2|file|max:5000",
             "description" => "required|min:5",
             "featured_image" => "nullable|mimes:png,jpg,jpeg|file|max:5000"
+        ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'photos.*' => 'photos',
         ];
     }
 }

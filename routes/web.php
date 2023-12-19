@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\CategoryController;
 
 /*
@@ -29,6 +30,7 @@ Route::middleware('auth')->group(function () {
         'users' => UserController::class,
         'categories' => CategoryController::class,
         'posts' => PostController::class,
+        'photos' => PhotoController::class,
     ]);
 });
 

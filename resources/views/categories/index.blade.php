@@ -16,15 +16,16 @@
             <table class="table table-striped table-hover table-bordered align-middle">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Category Title</th>
+                        <th>#</th>
+                        <th>Category Title</th>
+                        <th>Post Count</th>
 
                         @notuser
                             <th>Created User</th>
                         @endnotuser
 
-                        <th scope="col">Date & Time</th>
-                        <th scope="col">Actions</th>
+                        <th>Date & Time</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,8 +36,9 @@
                                 <p class="mb-0">{{ $category->title }}</p>
                                 <p class="badge text-bg-primary mb-0">{{ $category->slug }}</p>
                             </td>
+                            <td>{{ $category->posts()->count() }}</td>
                             @notuser
-                                <td>{{  \App\Models\User::find($category->user_id)->name }}</td>
+                                <td>{{ $category->user->name }}</td>
                             @endnotuser
                             <td class="text-nowrap">
                                 <div class="">

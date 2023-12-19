@@ -18,7 +18,8 @@
                     @csrf
                     <div class="mb-3">
                         <label for="postTitle" class="form-label fw-bold mb-0">Post Title</label>
-                        <input type="text" name="title" id="postTitle" value="{{ old('title') }}" placeholder="The winter is coming...."
+                        <input type="text" name="title" id="postTitle" value="{{ old('title') }}"
+                            placeholder="The winter is coming...."
                             class="form-control @error('title')
                                 is-invalid
                             @enderror">
@@ -29,14 +30,35 @@
 
                     <div class="mb-3">
                         <label for="category" class="form-label fw-bold mb-0">Category</label>
-                        <select name="category" class="form-select @error('category')
+                        <select name="category"
+                            class="form-select @error('category')
                             is-invalid
-                        @enderror" id="category">
-                            @foreach (\App\Models\Category::all() as $category)
-                                <option value="{{ $category->id }}" {{ $category->id == old('category')? 'selected' : '' }}>{{ $category->title }}</option>
+                        @enderror"
+                            id="category">
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}"
+                                    {{ $category->id == old('category') ? 'selected' : '' }}>
+                                    {{ $category->title }}</option>
                             @endforeach
                         </select>
                         @error('category')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="photos" class="form-label fw-bold mb-0">Photos</label>
+                        <input type="file" name="photos[]" id="photos" multiple
+                            class="form-control @error('photos')
+                                is-invalid
+                            @enderror @error('photos.*')
+                            is-invalid
+                        @enderror">
+                        @error('photos')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+
+                        @error('photos.*')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

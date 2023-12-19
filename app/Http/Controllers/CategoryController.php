@@ -18,10 +18,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::when(Auth::user()->isUser(),function($q){
+        $categories = Category::latest("id")
+        ->when(Auth::user()->isUser(),function($q){
             $q->where("user_id",Auth::id());
         })
-        ->latest("id")->get();
+        ->with(['user'])
+        ->get();
         return view('categories.index',compact('categories'));
     }
 

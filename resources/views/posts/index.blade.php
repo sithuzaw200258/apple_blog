@@ -56,10 +56,10 @@
                         <td>
                             <p class="mb-0">{{ $post->title }}</p>
                         </td>
-                        <td class="text-nowrap">{{ \App\Models\Category::find($post->category_id)->title }}</td>
+                        <td class="text-nowrap">{{ $post->category->title }}</td>
 
                         @notuser
-                            <td>{{ \App\Models\User::find($post->user_id)->name }}</td>
+                            <td>{{ $post->user->name }}</td>
                         @endnotuser
                         
                         <td class="text-nowrap">
