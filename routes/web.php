@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CategoryController;
 
 /*
@@ -17,15 +19,15 @@ use App\Http\Controllers\CategoryController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[WelcomeController::class,'index'])->name('welcome');
+Route::get('/detail/{slug}',[WelcomeController::class,'detail'])->name('welcome.detail');
+Route::get('/categories/{slug}',[WelcomeController::class,'postByCategory'])->name('welcome.category');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::resources([
         'users' => UserController::class,
         'categories' => CategoryController::class,

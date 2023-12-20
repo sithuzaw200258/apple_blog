@@ -58,7 +58,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return redirect()->route('users.index');
     }
 
     /**
@@ -69,7 +69,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('users.edit',compact('user'));
     }
 
     /**
@@ -81,7 +81,7 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        return $request;
     }
 
     /**
@@ -92,6 +92,9 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $userName = $user->name;
+        $user->delete();
+
+        return redirect()->route('users.index')->with('status',$userName." is deleted successfully.");
     }
 }

@@ -16,7 +16,7 @@
             <div class="row d-flex justify-content-between align-items-center">
                 <div class="col-md-4">
                     @if (request('keyword'))
-                        <p class="">
+                        <p style="font-size: 12px">
                             Search by : <span class="fw-bold"> "{{ request('keyword') }}"</span>
                             <a href="{{ route('posts.index') }}" class=""><i class="bi bi-x"
                                     style="color: #df0000;font-size :16px;"></i></a>

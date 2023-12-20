@@ -117,7 +117,9 @@ class PostController extends Controller
         // Authorization
         Gate::authorize('update', $post);
 
-        return view("posts.edit",compact('post'));
+        $categories = Category::latest("id")->get();
+
+        return view("posts.edit",compact('post','categories'));
     }
 
     /**

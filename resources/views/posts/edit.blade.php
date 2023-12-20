@@ -37,7 +37,7 @@
                         <select name="category" form="updatePostForm" class="form-select @error('category')
                             is-invalid
                         @enderror" id="category">
-                            @foreach (\App\Models\Category::all() as $category)
+                            @foreach ($categories as $category)
                                 <option value="{{ $category->id }}" {{ $category->id == old('category',$post->category_id)? 'selected' : '' }}>{{ $category->title }}</option>
                             @endforeach
                         </select>

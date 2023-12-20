@@ -16,7 +16,7 @@
             <div class="row d-flex justify-content-between align-items-center">
                 <div class="col-md-4">
                     @if (request('keyword'))
-                        <p class="">
+                        <p style="font-size: 12px">
                             Search by : <span class="fw-bold"> "{{ request('keyword') }}"</span>
                             <a href="{{ route('users.index') }}" class=""><i class="bi bi-x"
                                     style="color: #df0000;font-size :16px;"></i></a>
@@ -65,10 +65,7 @@
                             </div>
                         </td>
                         <td class="text-nowrap">
-                            <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-outline-info">
-                                <i class="bi bi-info-circle"></i>
-                            </a>
-
+                            
                             <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-outline-warning">
                                 <i class="bi bi-pencil-square"></i>
                             </a>
