@@ -21,7 +21,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
                 <h5 class="fw-bolder text-primary">Edit Category</h5>
-                <a href="{{ route('categories.index') }}" class="btn btn-sm btn-outline-secondary px-3 py-1">Back</a>
+                <button onclick="goBack()" class="btn btn-sm btn-outline-secondary px-3 py-1">Back</button>
             </div>
             <hr>
             <div class="">

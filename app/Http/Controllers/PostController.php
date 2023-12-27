@@ -43,8 +43,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = Category::latest("id")->get();
-        return view('posts.create',compact('categories'));
+        return view('posts.create');
     }
 
     /**
@@ -75,7 +74,6 @@ class PostController extends Controller
 
         $post->save();
 
-        
         foreach ($request->photos as $photo) {
             $fileName = uniqid()."_post_photo.".$photo->extension();
 
@@ -117,9 +115,7 @@ class PostController extends Controller
         // Authorization
         Gate::authorize('update', $post);
 
-        $categories = Category::latest("id")->get();
-
-        return view("posts.edit",compact('post','categories'));
+        return view("posts.edit",compact('post'));
     }
 
     /**
@@ -155,17 +151,19 @@ class PostController extends Controller
 
         $post->update();
 
-        foreach ($request->photos as $photo) {
-            $fileName = uniqid()."_post_photo.".$photo->extension();
-
-            // Store photos to the storage folder
-            $photo->storeAs("public",$fileName);
-
-            // Store photos to the database
-            $photo = new Photo();
-            $photo->post_id = $post->id;
-            $photo->name = $fileName;
-            $photo->save();
+        if ($request->photos) {
+            foreach ($request->photos as $photo) {
+                $fileName = uniqid()."_post_photo.".$photo->extension();
+    
+                // Store photos to the storage folder
+                $photo->storeAs("public",$fileName);
+    
+                // Store photos to the database
+                $photo = new Photo();
+                $photo->post_id = $post->id;
+                $photo->name = $fileName;
+                $photo->save();
+            }
         }
 
         return redirect()->route('posts.index')->with('status',$post->title." is updated successfully.");

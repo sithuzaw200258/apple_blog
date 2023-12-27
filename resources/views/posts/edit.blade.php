@@ -13,7 +13,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center">
                 <h5 class="fw-bolder text-primary">Edit Post</h5>
-                <a href="{{ route('posts.index') }}" class="btn btn-sm btn-outline-secondary px-3 py-1">Back</a>
+                <button onclick="goBack()" class="btn btn-sm btn-outline-secondary px-3 py-1">Back</button>
             </div>
             <hr>
             <div class="">
@@ -21,16 +21,7 @@
                     @csrf
                     @method("put")
                 </form>
-                    <div class="mb-3">
-                        <label for="postTitle" class="form-label fw-bold mb-0">Post Title</label>
-                        <input type="text" name="title" id="postTitle" form="updatePostForm" value="{{ old('title',$post->title) }}" placeholder="The winter is coming...."
-                            class="form-control @error('title')
-                                is-invalid
-                            @enderror">
-                        @error('title')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    <x-forms.input form="updatePostForm" label="Post Title" name="title" placeholder="The winter is coming..." :default="$post->title" />
 
                     <div class="mb-3">
                         <label for="category" class="form-label fw-bold mb-0">Category</label>
@@ -46,22 +37,7 @@
                         @enderror
                     </div>
 
-                    <div class="mb-2">
-                        <label for="photos" class="form-label fw-bold mb-0">Photos</label>
-                        <input type="file" name="photos[]" id="photos" form="updatePostForm" multiple
-                            class="form-control @error('photos')
-                                is-invalid
-                            @enderror @error('photos.*')
-                            is-invalid
-                        @enderror">
-                        @error('photos')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-
-                        @error('photos.*')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    <x-forms.input form="updatePostForm" label="Photos" type="file" name="photos" multiple=true />
 
                     <div class="mb-3">
                         @foreach ($post->photos as $photo)
@@ -78,27 +54,10 @@
                         @endforeach
                     </div>
 
-                    <div class="mb-3">
-                        <label for="postDescription" class="form-label fw-bold mb-0">Post Description</label>
-                        <textarea name="description" id="postDescription"  form="updatePostForm" rows="5" placeholder="This is a latest news....."
-                            class="form-control @error('description')
-                                is-invalid
-                            @enderror">{{ old('description',$post->description) }}</textarea>
-                        @error('description')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    <x-forms.textarea form="updatePostForm" label="Post Description" name="description" placeholder="This is a latest news..." :default="$post->description" />
 
-                    <div class="mb-3">
-                        <label for="featureImage" class="form-label fw-bold mb-0">Featured Image</label>
-                        <input type="file" name="featured_image" id="featureImage" form="updatePostForm"
-                            class="form-control @error('featured_image')
-                                is-invalid
-                            @enderror">
-                        @error('featured_image')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    <x-forms.input form="updatePostForm" label="Featured Image" type="file" name="featured_image" />
+                    
                     <div class="mb-1">
                         @if ($post->featured_image)
                             <img src="{{ asset('storage/'.$post->featured_image) }}" alt="" class="object-fit-cover" width="100" height="100">

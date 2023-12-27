@@ -1,19 +1,22 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
-        <a class="navbar-brand" href="#">Apple Blog</a>
+        <a class="navbar-brand" href="{{ route('welcome') }}"><i class="bi bi-apple me-1"></i> Apple Blog</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+                <li class="nav-item">
+                    <x-nav-link name="Home" :url="route('welcome')"/>
+                </li>
                 @if (Route::has('login'))
                     @auth
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
-                                <img src="{{ asset('mboy.jpg') }}" alt="User Photo" class="profile-image">
                                 {{ Auth::user()->name }}
+                                <img src="{{ asset('mboy.jpg') }}" alt="User Photo" class="profile-image ms-2">
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
@@ -38,12 +41,12 @@
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">Login</a>
+                            <x-nav-link name="Login" :url="route('login')"/>
                         </li>
 
                         @if (Route::has('register'))
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">Register</a>
+                                <x-nav-link name="Register" :url="route('register')"/>
                             </li>
                         @endif
                     @endauth

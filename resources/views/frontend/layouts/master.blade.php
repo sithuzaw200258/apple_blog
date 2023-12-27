@@ -23,7 +23,8 @@
 
         @include('frontend.layouts.navbar')
 
-        <div class="container">
+        @yield('content')
+        {{-- <div class="container">
             <div class="row py-3 justify-content-center">
                 <div class="col-md-6">
                     @yield('content')
@@ -32,7 +33,7 @@
                     @include('frontend.layouts.sidebar')
                 </div>
             </div>
-        </div>
+        </div> --}}
         
         @stack('scripts')
     </body>

@@ -1,4 +1,4 @@
-<div class="search-box mb-3">
+<div class="search-box mb-4">
     <form method="GET">
         <div class="input-group mb-1">
             <input type="text" class="form-control" name="keyword" placeholder="search by title or desc...">
@@ -19,19 +19,16 @@
 </div>
 
 
-<div class="category-lists">
+<div class="category-lists mb-4">
     <h6 class="text-uppercase text-muted fw-bolder">
-        <i class="bi bi-card-list me-1"></i> Category Lists
+        <i class="bi bi-stack me-1"></i> Category Lists
     </h6>
     <div class="list-group">
-        <a href="{{ route('welcome') }}" class="list-group-item list-group-item-action {{ request()->is('/') ? 'active' : '' }}" aria-current="true">
+        <a href="{{ route('welcome') }}" class="list-group-item list-group-item-action {{ request()->url() === route('welcome') ? 'active' : '' }}" aria-current="true">
             All
         </a>
-        @foreach (\App\Models\Category::all() as $category)
-            <a href="{{ route('welcome.category',$category->slug) }}" class="list-group-item list-group-item-action {{ request()->is('categories/'.$category->slug) ? 'active' : '' }}">
-                {{-- <i class="bi bi-card-text ms-2" style="font-size: 12px"></i> --}}
-                {{ $category->title }}
-            </a>
+        @foreach ($categories as $category)
+            <x-list-group-item item="{{ $category->title }}" :url="route('welcome.category',$category->slug)" />
         @endforeach
 
     </div>

@@ -16,17 +16,7 @@
             <div class="">
                 <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="mb-3">
-                        <label for="postTitle" class="form-label fw-bold mb-0">Post Title</label>
-                        <input type="text" name="title" id="postTitle" value="{{ old('title') }}"
-                            placeholder="The winter is coming...."
-                            class="form-control @error('title')
-                                is-invalid
-                            @enderror">
-                        @error('title')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    <x-forms.input label="Post Title" name="title" placeholder="The winter is coming..." />
 
                     <div class="mb-3">
                         <label for="category" class="form-label fw-bold mb-0">Category</label>
@@ -46,44 +36,11 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3">
-                        <label for="photos" class="form-label fw-bold mb-0">Photos</label>
-                        <input type="file" name="photos[]" id="photos" multiple
-                            class="form-control @error('photos')
-                                is-invalid
-                            @enderror @error('photos.*')
-                            is-invalid
-                        @enderror">
-                        @error('photos')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                    <x-forms.input label="Photos" type="file" name="photos" multiple=true />
 
-                        @error('photos.*')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    <x-forms.textarea label="Post Description" name="description" placeholder="This is a latest news..." />    
 
-                    <div class="mb-3">
-                        <label for="postDescription" class="form-label fw-bold mb-0">Post Description</label>
-                        <textarea name="description" id="postDescription" rows="5" placeholder="This is a latest news....."
-                            class="form-control @error('description')
-                                is-invalid
-                            @enderror">{{ old('description') }}</textarea>
-                        @error('description')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="featureImage" class="form-label fw-bold mb-0">Featured Image</label>
-                        <input type="file" name="featured_image" id="featureImage"
-                            class="form-control @error('featured_image')
-                                is-invalid
-                            @enderror">
-                        @error('featured_image')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                    <x-forms.input label="Featured Image" type="file" name="featured_image" />
 
                     <div class="text-end">
                         <button class="btn btn-primary">Create Post</button>

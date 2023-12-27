@@ -1,6 +1,14 @@
 import Swal from 'sweetalert2'
 import './bootstrap';
 
+
+
+
+window.goBack = function() {
+    window.history.back();
+}
+
+
 window.showToast = function(status) {
     const Toast = Swal.mixin({
         toast: true,

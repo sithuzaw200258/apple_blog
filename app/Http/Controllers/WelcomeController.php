@@ -24,7 +24,9 @@ class WelcomeController extends Controller
         $post = Post::where("slug",$slug)
         ->with(['category','user','photos'])
         ->first();
-        return view('frontend.detail',compact('post'));
+
+        $recentPosts =Post::latest("id")->limit(5)->get();
+        return view('frontend.detail',compact('post','recentPosts'));
     }
 
     public function postByCategory($slug) {

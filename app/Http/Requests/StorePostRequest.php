@@ -27,7 +27,7 @@ class StorePostRequest extends FormRequest
             "title" => "bail|required|min:2|unique:posts",
             "category" => "required|exists:categories,id",
             "photos" => "required",
-            "photos.*" => "mimes:png,jpg,jpeg|min:2|file|max:5000",
+            "photos.*" => "mimes:png,jpg,jpeg|file|max:5000",
             "description" => "required|min:5",
             "featured_image" => "nullable|mimes:png,jpg,jpeg|file|max:5000"
         ];

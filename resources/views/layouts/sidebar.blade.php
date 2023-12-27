@@ -1,34 +1,61 @@
 <div class="list-group mb-3">
-    <a href="{{ route('home') }}" class="list-group-item list-group-item-action text-muted {{ request()->is('home') ? 'active' : '' }}">
-        <i class="bi bi-house-door"></i> Home
-    </a>
-    <a href="{{ route('photos.index') }}" class="list-group-item list-group-item-action text-muted {{ request()->is('photos') ? 'active' : '' }}">
-        <i class="bi bi-image"></i> Gallary
-    </a>
+    <x-list-group-item item="Home" :url="route('home')"> 
+        <i class="bi bi-house-door"></i> 
+    </x-list-group-item>
+
+    <x-list-group-item item="Go To Welcome Page" :url="route('welcome')"> 
+        <i class="bi bi-arrow-left-circle"></i>
+    </x-list-group-item>
+
+    <x-list-group-item item="Gallary" :url="route('photos.index')"> 
+        <i class="bi bi-image"></i>
+    </x-list-group-item>
 </div>
 
-<p class="text-muted mb-0">Manage Categories</p>
+<p class="text-muted text-uppercase fs-6 mb-0"><i class="bi bi-stack me-1"></i>Manage Categories</p>
 <div class="list-group mb-3">
-    <a href="{{ route('categories.index') }}" class="list-group-item list-group-item-action text-muted {{ request()->is('categories') ? 'active' : '' }}">
-        <i class="bi bi-list-task"></i> Category Lists
-    </a>
-    <a href="{{ route('categories.create') }}" class="list-group-item list-group-item-action text-muted {{ request()->is('categories/create') ? 'active' : '' }}"><i class="bi bi-plus-square"></i> Create Category</a>
+    <x-list-group-item item="Category Lists" :url="route('categories.index')"> 
+        <i class="bi bi-list-task"></i> 
+    </x-list-group-item>
+
+    <x-list-group-item item="Create Category" :url="route('categories.create')"> 
+        <i class="bi bi-plus-square"></i>
+    </x-list-group-item>
+    
 </div>
 
-<p class="text-muted mb-0">Manage Posts</p>
+<p class="text-muted text-uppercase fs-6 mb-0"><i class="bi bi-postcard-fill me-1"></i>Manage Posts</p>
 <div class="list-group mb-3">
-    <a href="{{ route('posts.index') }}" class="list-group-item list-group-item-action text-muted {{ request()->is('posts') ? 'active' : '' }}">
-        <i class="bi bi-list-task"></i> Post Lists
-    </a>
-    <a href="{{ route('posts.create') }}" class="list-group-item list-group-item-action text-muted {{ request()->is('posts/create') ? 'active' : '' }}"> <i class="bi bi-plus-square"></i> Create Post</a>
+    <x-list-group-item item="Post Lists" :url="route('posts.index')"> 
+        <i class="bi bi-list-task"></i>
+    </x-list-group-item>
+
+    <x-list-group-item item="Create Post" :url="route('posts.create')"> 
+        <i class="bi bi-plus-square"></i>
+    </x-list-group-item>
 </div>
     
 @admin
-    <p class="text-muted mb-0">Manage Users</p>
+    <p class="text-muted text-uppercase fs-6 mb-0"><i class="bi bi-person-vcard me-1"></i>Manage Users</p>
     <div class="list-group mb-3">
-        <a href="{{ route('users.index') }}" class="list-group-item list-group-item-action text-muted {{ request()->is('users') ? 'active' : '' }}">
-            <i class="bi bi-list-task"></i> User Lists
-        </a>
-        <a href="{{ route('users.create') }}" class="list-group-item list-group-item-action text-muted {{ request()->is('users/create') ? 'active' : '' }}"> <i class="bi bi-plus-square"></i> Create User</a>
+        <x-list-group-item item="User Lists" :url="route('users.index')"> 
+            <i class="bi bi-list-task"></i>
+        </x-list-group-item>
+        
+        <x-list-group-item item="Create User" :url="route('users.create')"> 
+            <i class="bi bi-plus-square"></i>
+        </x-list-group-item>
     </div>
 @endadmin
+
+
+<div class="d-grid gap-2">
+    <a href="{{ route('logout') }}" class="btn btn-danger" onclick="event.preventDefault();
+        document.getElementById('logout-form').submit();">
+        <i class="bi bi-box-arrow-right me-1"></i>{{ __('Logout') }}
+    </a>
+
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+    </form>
+</div>

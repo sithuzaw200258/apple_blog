@@ -1,15 +1,21 @@
 // Fonts
-@import url('https://fonts.bunny.net/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 // Bootstrap Icons
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 
 $breadcrumb-divider: quote(">");
+$caret-width: 0;
 // Variables
 @import 'variables';
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+:root{
+    --bs-body-font-family: 'Poppins', sans-serif;
+}
+
 
 .gallary{
     columns: 3 250px;
