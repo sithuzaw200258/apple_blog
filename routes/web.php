@@ -20,6 +20,7 @@ use App\Http\Controllers\CategoryController;
 */
 
 Route::get('/',[WelcomeController::class,'index'])->name('welcome');
+Route::delete('/welcome/posts/delete/{id}',[WelcomeController::class,'deletePost'])->name('welcome.posts.delete');
 Route::get('/detail/{slug}',[WelcomeController::class,'detail'])->name('welcome.detail');
 Route::get('/categories/{slug}',[WelcomeController::class,'postByCategory'])->name('welcome.category');
 

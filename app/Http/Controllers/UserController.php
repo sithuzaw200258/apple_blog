@@ -18,11 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::when(request('keyword'),function($q){
-            $keyword = request('keyword');
-            $q->orWhere("name","like","%$keyword%")
-            ->orWhere("email","like","%$keyword%");
-        })
+        $users = User::search()
         ->latest("id")
         ->paginate(10)
         ->withQueryString();

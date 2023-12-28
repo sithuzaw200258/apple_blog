@@ -21,18 +21,16 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::when(request('keyword'),function($q){
-            $keyword = request('keyword');
-            $q->orWhere("title","like","%$keyword%")
-            ->orWhere("description","like","%$keyword%");
-        })
+        $posts = Post::search()
         ->when(Auth::user()->isUser(),function($q){
             $q->where("user_id",Auth::id());
         })
-        ->with(['category','user'])
+        // ->with(['category','user','photos'])
         ->latest("id")
         ->paginate(10)
         ->withQueryString();
+
+        return $posts;
         return view("posts.index",compact('posts'));
     }
 
@@ -74,18 +72,28 @@ class PostController extends Controller
 
         $post->save();
 
-        foreach ($request->photos as $photo) {
+        $photoArr = [];
+
+        foreach ($request->photos as $key=>$photo) {
             $fileName = uniqid()."_post_photo.".$photo->extension();
 
             // Store photos to the storage folder
             $photo->storeAs("public",$fileName);
 
-            // Store photos to the database
-            $photo = new Photo();
-            $photo->post_id = $post->id;
-            $photo->name = $fileName;
-            $photo->save();
+            // 1.Store photos to the dateabase
+            $photoArr[$key]=[
+                "post_id" => $post->id,
+                "name" => $fileName,
+            ];
+
+            // 2.Store photos to the database
+            // $photo = new Photo();
+            // $photo->post_id = $post->id;
+            // $photo->name = $fileName;
+            // $photo->save();
         }
+
+        Photo::insert($photoArr);
         
         return redirect()->route('posts.index')->with('status',$post->title." is created successfully.");
     }
@@ -151,19 +159,29 @@ class PostController extends Controller
 
         $post->update();
 
+
         if ($request->photos) {
-            foreach ($request->photos as $photo) {
+            $photoArr=[];
+            foreach ($request->photos as $key=>$photo) {
                 $fileName = uniqid()."_post_photo.".$photo->extension();
     
                 // Store photos to the storage folder
                 $photo->storeAs("public",$fileName);
-    
-                // Store photos to the database
-                $photo = new Photo();
-                $photo->post_id = $post->id;
-                $photo->name = $fileName;
-                $photo->save();
+
+                // 1.Store photos to the dateabase
+                $photoArr[$key]=[
+                    "post_id" => $post->id,
+                    "name" => $fileName,
+                ];
+
+                // 2.Store photos to the database
+                // $photo = new Photo();
+                // $photo->post_id = $post->id;
+                // $photo->name = $fileName;
+                // $photo->save();
             }
+
+            Photo::insert($photoArr);
         }
 
         return redirect()->route('posts.index')->with('status',$post->title." is updated successfully.");
@@ -186,11 +204,28 @@ class PostController extends Controller
             Storage::delete("public/".$post->featured_image);
         }
 
-        foreach ($post->photos as $photo) {
+        // 1. Delete photos from storage
+        // foreach ($post->photos as $photo) {
             // Delete photo
-            Storage::delete("public/".$photo->name);
-            $photo->delete();
-        }
+            // Storage::delete("public/".$photo->name);
+            // $photo->delete();
+
+        // }
+
+        // 2. Delete photos from storage
+        $photoArr = $post->photos->map(function($photo) { 
+            return "public/".$photo->name;
+        })->toArray();
+        Storage::delete($photoArr);
+
+
+        // 1. Delete Photos
+        Photo::where("post_id",$post->id)->delete();
+
+        // 2. Delete Photos
+        // $photoIdArr = $post->photos->pluck("id")->toArray();
+        // Photo::destroy($photoIdArr);
+        
         $post->delete();
         return redirect()->route('posts.index')->with('status',$postTitle.' is deleted successfully.');
     }

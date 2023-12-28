@@ -16,7 +16,7 @@ class PostApiController extends Controller
             ->orWhere("description","like","%$keyword%");
         })
         ->latest("id")
-        ->with(['category','user'])
+        // ->with(['category','user','photos])
         ->paginate(5)->withQueryString();
         
         return response()->json($posts);
@@ -24,7 +24,7 @@ class PostApiController extends Controller
 
     public function detail($slug){
         $post = Post::where("slug",$slug)
-        ->with(['category','user','photos'])
+        // ->with(['category','user','photos'])
         ->first();
 
         return response()->json($post);

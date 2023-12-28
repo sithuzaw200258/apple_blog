@@ -1,4 +1,17 @@
+@auth
+    <div class="d-grid gap-2 mb-4">
+        <a href="{{ route('home') }}" class="btn btn-success">
+            <i class="bi bi-bar-chart me-1"></i>
+            Dashborad
+        </a>
+    </div>
+@endauth
+
 <div class="search-box mb-4">
+    <h6 class="text-uppercase text-muted fw-bolder">
+        <i class="bi bi-search me-1"></i> Search Posts
+    </h6>
+
     <form method="GET">
         <div class="input-group mb-1">
             <input type="text" class="form-control" name="keyword" placeholder="search by title or desc...">
@@ -17,7 +30,6 @@
         </div>
     @endif
 </div>
-
 
 <div class="category-lists mb-4">
     <h6 class="text-uppercase text-muted fw-bolder">

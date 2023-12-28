@@ -34,13 +34,13 @@
 
                                                     @can('delete', $post)
                                                         <li>
-                                                            <a class="dropdown-item" href="{{ route('posts.destroy', $post->id) }}"
+                                                            <a class="dropdown-item" href="{{ route('welcome.posts.delete', $post->id) }}"
                                                                 onclick="event.preventDefault();
                                                                 document.getElementById('delete-form').submit();">
                                                                 <i class="bi bi-trash3 me-1"></i>Delete Post
                                                             </a>
                                                         </li>
-                                                        <form id="delete-form" action="{{ route('posts.destroy', $post->id) }}"
+                                                        <form id="delete-form" action="{{ route('welcome.posts.delete', $post->id) }}"
                                                             method="POST" class="d-none">
                                                             @csrf
                                                             @method('delete')

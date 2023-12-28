@@ -19,12 +19,13 @@
 
     @yield('css')
 </head>
-    <body>
 
-        @include('frontend.layouts.navbar')
+<body>
 
-        @yield('content')
-        {{-- <div class="container">
+    @include('frontend.layouts.navbar')
+
+    @yield('content')
+    {{-- <div class="container">
             <div class="row py-3 justify-content-center">
                 <div class="col-md-6">
                     @yield('content')
@@ -34,7 +35,13 @@
                 </div>
             </div>
         </div> --}}
-        
-        @stack('scripts')
-    </body>
+
+    @stack('scripts')
+    @if (session('status'))
+        <script type="module">
+            showToast("{{ session('status') }}")
+        </script>
+    @endif
+</body>
+
 </html>

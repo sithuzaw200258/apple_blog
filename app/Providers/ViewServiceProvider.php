@@ -27,9 +27,9 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        // DB::listen(function ($q) {
-        //     logger($q->sql);
-        // });
+        DB::listen(function ($q) {
+            logger($q->sql);
+        });
 
         View::composer([
             'frontend.welcome',

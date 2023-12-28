@@ -63,4 +63,12 @@ class User extends Authenticatable
     public function isUser() {
         return $this->role === "user";
     }
+
+    public function scopeSearch($query) {
+        return $query->when(request('keyword'),function($q){
+            $keyword = request('keyword');
+            $q->orWhere("name","like","%$keyword%")
+            ->orWhere("email","like","%$keyword%");
+        });
+    }
 }

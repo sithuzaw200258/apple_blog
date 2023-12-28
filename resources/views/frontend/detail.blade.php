@@ -6,6 +6,15 @@
     <div class="container">
         <div class="row py-3 justify-content-center">
             <div class="col-md-6">
+
+                {{-- Breadcrumb --}}
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ route('welcome') }}">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Post Details</li>
+                    </ol>
+                </nav>
+
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="user mb-3 d-flex justify-content-between align-items-center">
@@ -30,12 +39,12 @@
 
                                             @can('delete', $post)
                                                 <li>
-                                                    <a class="dropdown-item" href="{{ route('posts.destroy', $post->id) }}" onclick="event.preventDefault();
+                                                    <a class="dropdown-item" href="{{ route('welcome.posts.delete', $post->id) }}" onclick="event.preventDefault();
                                                     document.getElementById('delete-form').submit();">
                                                         <i class="bi bi-trash3 me-1"></i>Delete Post
                                                     </a>
                                                 </li>
-                                                <form id="delete-form" action="{{ route('posts.destroy', $post->id) }}" method="POST" class="d-none">
+                                                <form id="delete-form" action="{{ route('welcome.posts.delete', $post->id) }}" method="POST" class="d-none">
                                                     @csrf
                                                     @method('delete')
                                                     
@@ -71,6 +80,10 @@
                                 width="150" height="150">
                         @endforeach
                     </div>
+                </div>
+
+                <div class="text-end">
+                    <button onclick="goBack()" class="btn btn-sm btn-outline-secondary px-3 py-1">Back</button>
                 </div>
             </div>
             <div class="col-md-3">
