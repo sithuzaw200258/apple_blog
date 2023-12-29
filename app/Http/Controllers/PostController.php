@@ -30,7 +30,6 @@ class PostController extends Controller
         ->paginate(10)
         ->withQueryString();
 
-        return $posts;
         return view("posts.index",compact('posts'));
     }
 
@@ -199,6 +198,35 @@ class PostController extends Controller
         Gate::authorize('delete', $post);
 
         $postTitle = $post->title;
+        $post->delete();
+        return redirect()->route('posts.index')->with('status',$postTitle.' is deleted successfully.');
+    }
+
+    public function deletedPosts() {
+        $posts = Post::search()
+        ->when(Auth::user()->isUser(),function($q){
+            $q->where("user_id",Auth::id());
+        })
+        ->onlyTrashed()
+        // ->with(['category','user','photos'])
+        ->latest("id")
+        ->paginate(10)
+        ->withQueryString();
+
+        return view("posts.trashed",compact('posts'));
+    }
+
+    public function forceDeletePost($id)
+    {
+        // return $id;
+
+        $post= Post::withTrashed()->findOrFail($id);
+        // dd($post);
+
+        // Authorization
+        Gate::authorize('delete', $post);
+
+        $postTitle = $post->title;
         if(isset($post->featured_image)){
             // Delete photo
             Storage::delete("public/".$post->featured_image);
@@ -218,15 +246,26 @@ class PostController extends Controller
         })->toArray();
         Storage::delete($photoArr);
 
-
         // 1. Delete Photos
         Photo::where("post_id",$post->id)->delete();
 
-        // 2. Delete Photos
+         // 2. Delete Photos
         // $photoIdArr = $post->photos->pluck("id")->toArray();
         // Photo::destroy($photoIdArr);
         
-        $post->delete();
-        return redirect()->route('posts.index')->with('status',$postTitle.' is deleted successfully.');
+        $post->forceDelete(); 
+        return redirect()->route('posts.trashed')->with('status',$postTitle.' is deleted successfully.');
+    }
+
+    public function restorePost($id) {
+        $post = Post::withTrashed()->findOrFail($id);
+
+         // Authorization
+        Gate::authorize('delete', $post);
+
+        $postTitle = $post->title;
+
+        $post->restore();
+        return redirect()->route('posts.trashed')->with('status',$postTitle.' is restored successfully.');
     }
 }

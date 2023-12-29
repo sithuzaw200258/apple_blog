@@ -51,10 +51,10 @@ class WelcomeController extends Controller
         Gate::authorize('delete', $post);
 
         $postTitle = $post->title;
-        if(isset($post->featured_image)){
-            // Delete photo
-            Storage::delete("public/".$post->featured_image);
-        }
+        // if(isset($post->featured_image)){
+        //     // Delete photo
+        //     Storage::delete("public/".$post->featured_image);
+        // }
 
         // foreach ($post->photos as $photo) {
         //     Delete photo
@@ -63,14 +63,14 @@ class WelcomeController extends Controller
         // }
 
         // 2. Delete photos from storage
-        $photoArr = $post->photos->map(function($photo) { 
-            return "public/".$photo->name;
-        })->toArray();
-        Storage::delete($photoArr);
+        // $photoArr = $post->photos->map(function($photo) { 
+        //     return "public/".$photo->name;
+        // })->toArray();
+        // Storage::delete($photoArr);
 
 
         // 1. Delete Photos
-        Photo::where("post_id",$post->id)->delete();
+        // Photo::where("post_id",$post->id)->delete();
         
         $post->delete();
         return redirect()->route('welcome')->with('status',$postTitle.' is deleted successfully.');

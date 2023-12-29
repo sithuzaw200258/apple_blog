@@ -37,5 +37,9 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     ]);
 });
 
+Route::get('/posts/trashed',[PostController::class,'deletedPosts'])->name('posts.trashed');
+Route::delete('/posts/delete/{id}',[PostController::class,'forceDeletePost'])->name('posts.delete');
+Route::delete('/posts/restore/{id}',[PostController::class,'restorePost'])->name('posts.restore');
+
 // Route::resource('categories', CategoryController::class);
 

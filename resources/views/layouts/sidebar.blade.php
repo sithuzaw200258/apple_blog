@@ -33,6 +33,10 @@
     <x-list-group-item item="Create Post" :url="route('posts.create')"> 
         <i class="bi bi-plus-square"></i>
     </x-list-group-item>
+
+    <x-list-group-item item="Deleted Posts" :url="route('posts.trashed')"> 
+        <i class="bi bi-trash3"></i>
+    </x-list-group-item>
 </div>
     
 @admin
