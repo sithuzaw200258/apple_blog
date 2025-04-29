@@ -5,11 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class UserController extends Controller
 {
     public function __construct() {
         $this->middleware('isAdmin');
+    }
+    public function viewPDF()
+    {
+        $users = User::all();
+        $pdf = PDF::loadView('pdf.users', ['users' =>  $users])
+        ->setPaper('a4', 'portrait');
+        return $pdf->stream();
+    }
+
+    public function downloadPDF()
+    {
+        $users = User::all();
+        $pdf = PDF::loadView('pdf.users', array('users' =>  $users))
+        ->setPaper('a4', 'portrait');
+        return $pdf->download('users.pdf');   
     }
     /**
      * Display a listing of the resource.

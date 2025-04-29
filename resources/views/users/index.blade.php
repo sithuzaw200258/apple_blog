@@ -11,7 +11,13 @@
 
     <div class="card">
         <div class="card-body">
-            <h5 class="text-primary fw-bolder">User Lists</h5>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="text-primary fw-bolder">User Lists</h5>
+                <a href="{{ route('view-pdf') }}" class="btn btn-outline-primary btn-sm" target="_blank">
+                    <i class="bi bi-file-earmark-pdf"></i> 
+                    Download PDF
+                </a>
+            </div>
 
             <div class="row d-flex justify-content-between align-items-center">
                 <div class="col-md-4">

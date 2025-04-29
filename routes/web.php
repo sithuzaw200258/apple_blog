@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CategoryController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,5 +42,6 @@ Route::get('/posts/trashed',[PostController::class,'deletedPosts'])->name('posts
 Route::delete('/posts/delete/{id}',[PostController::class,'forceDeletePost'])->name('posts.delete');
 Route::delete('/posts/restore/{id}',[PostController::class,'restorePost'])->name('posts.restore');
 
-// Route::resource('categories', CategoryController::class);
+Route::get('users/view-pdf', [UserController::class, 'viewPDF'])->name('view-pdf');
+Route::get('users/download-pdf', [UserController::class, 'downloadPDF'])->name('download-pdf');
 
