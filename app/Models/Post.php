@@ -10,6 +10,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Post extends Model
 {
     use HasFactory,SoftDeletes;
+    protected $fillable = [
+        'title',
+        'slug',
+        'description',
+        'excerpt',
+        'category_id',
+        'user_id',
+    ];
 
     protected $with = ['user','category','photos'];
 

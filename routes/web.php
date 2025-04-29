@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CategoryController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,10 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
 Route::get('/posts/trashed',[PostController::class,'deletedPosts'])->name('posts.trashed');
 Route::delete('/posts/delete/{id}',[PostController::class,'forceDeletePost'])->name('posts.delete');
 Route::delete('/posts/restore/{id}',[PostController::class,'restorePost'])->name('posts.restore');
+
+
+Route::get('posts/export', [PostController::class, 'export'])->name('posts.export');
+Route::post('posts/import', [PostController::class, 'import'])->name('posts.import');
 
 // Route::resource('categories', CategoryController::class);
 

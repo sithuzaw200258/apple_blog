@@ -11,10 +11,16 @@
 
     <div class="card">
         <div class="card-body">
-            <h5 class="text-primary fw-bolder">Post Lists</h5>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="text-primary fw-bolder">Post Lists</h5>
+                <a href="{{ route('posts.export') }}" class="btn btn-outline-success btn-sm">
+                    <i class="bi bi-download"></i>
+                    Export Excel
+                </a>
+            </div>
 
             <div class="row d-flex justify-content-between align-items-center">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     @if (request('keyword'))
                         <p style="font-size: 12px">
                             Search by : <span class="fw-bold"> "{{ request('keyword') }}"</span>
@@ -23,7 +29,7 @@
                         </p>
                     @endif
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-7">
                     <form action="{{ route('posts.index') }}" method="GET">
                         <div class="input-group">
                             <input type="text" class="form-control" name="keyword" value="{{ old('keyword') }}"
@@ -61,7 +67,7 @@
                         @notuser
                             <td>{{ $post->user->name }}</td>
                         @endnotuser
-                        
+
                         <td class="text-nowrap">
                             <div class="">
                                 <i class="bi bi-calendar3" style="color: rgb(51, 112, 226);"></i>

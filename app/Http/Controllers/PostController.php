@@ -2,18 +2,38 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PostsExport;
 use App\Models\Post;
 use App\Models\Photo;
-use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePostRequest;
+use App\Imports\PostsImport;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PostController extends Controller
 {
+    public function import(Request $request) 
+    {
+        $request->validate([
+            'excel_file' => 'required|mimes:xlsx,xls,csv'
+        ]);
+
+         // Import the Excel file
+        // dd($request->file('excel_file'));
+        Excel::import(new PostsImport, $request->file('excel_file'));
+        return back()->with('success', 'Excel file imported successfully!');
+        // return redirect('/')->with('success', 'All good!');
+    }
+
+    public function export() 
+    {
+        return Excel::download(new PostsExport, 'posts_export.xlsx');
+    }
     /**
      * Display a listing of the resource.
      *
