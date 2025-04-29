@@ -17,7 +17,9 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'title' => fake()->word,
+            'slug' => fake()->slug,
+            'user_id' => \App\Models\User::factory(),
         ];
     }
 }

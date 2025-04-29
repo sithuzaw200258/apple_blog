@@ -17,7 +17,8 @@ class PhotoFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'post_id' => \App\Models\Post::factory(),
+            'name' => 'default-user-profile.png',
         ];
     }
 }
