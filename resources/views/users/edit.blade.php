@@ -19,7 +19,7 @@
             <div class="">
                 <form action="{{ route('users.update',$user->id) }}" method="POST">
                     @csrf
-                    @method("put")
+                    @method("PUT")
                 
                     <div class="mb-3">
                         <label for="name" class="form-label fw-bold mb-0">Name</label>
@@ -45,12 +45,12 @@
 
                     <div class="mb-3">
                         <label for="role" class="form-label fw-bold mb-0">Role</label>
-                        <select class="form-select @error('role')
+                        <select name="role" id="role" class="form-select @error('role')
                             is-invalid
-                        @enderror" name="role" id="role">
-                            <option value="{{ $user->role }}" {{ old('role',$user->role) === 'user' ? 'selected':''; }}>User</option>
-                            <option value="{{ $user->role }}" {{ old('role',$user->role) === 'editor' ? 'selected':''; }}>Editor</option>
-                            <option value="{{ $user->role }}" {{ old('role',$user->role) === 'admin' ? 'selected':''; }}>Admin</option>
+                        @enderror">
+                            <option value="user" {{ old('role',$user->role) == 'user' ? 'selected':''; }}>User</option>
+                            <option value="editor" {{ old('role',$user->role) == 'editor' ? 'selected':''; }}>Editor</option>
+                            <option value="admin" {{ old('role',$user->role) == 'admin' ? 'selected':''; }}>Admin</option>
                         </select>                     
                         @error('role')
                             <div class="invalid-feedback">{{ $message }}</div>

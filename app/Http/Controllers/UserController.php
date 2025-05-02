@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UsersDataTable;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -32,13 +33,18 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    // public function index()
+    // {
+    //     $users = User::search()
+    //     ->latest("id")
+    //     ->paginate(10)
+    //     ->withQueryString();
+    //     return view("users.index",compact('users'));
+    // }
+
+    public function index(UsersDataTable $dataTable)
     {
-        $users = User::search()
-        ->latest("id")
-        ->paginate(10)
-        ->withQueryString();
-        return view("users.index",compact('users'));
+        return $dataTable->render('users.index');
     }
 
     /**
@@ -48,7 +54,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return redirect()->route('users.index')->with('status','Sorry, User creation feature is not available yet.');
     }
 
     /**
@@ -93,7 +99,14 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        return $request;
+        // return $request->all();
+        $user->update($request->validated());
+        // $user->update([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'role' => $request->role,
+        // ]);
+        return redirect()->route('users.index')->with('status',$user->name." is updated successfully.");
     }
 
     /**
@@ -104,9 +117,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $userName = $user->name;
         $user->delete();
 
-        return redirect()->route('users.index')->with('status',$userName." is deleted successfully.");
+        return redirect()->route('users.index')->with('status',$user->name." is deleted successfully.");
     }
 }
