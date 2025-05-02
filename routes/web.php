@@ -43,8 +43,13 @@ Route::delete('/posts/delete/{id}',[PostController::class,'forceDeletePost'])->n
 Route::delete('/posts/restore/{id}',[PostController::class,'restorePost'])->name('posts.restore');
 
 
+
 Route::get('posts/export', [PostController::class, 'export'])->name('posts.export');
 Route::post('posts/import', [PostController::class, 'import'])->name('posts.import');
 
 // Route::resource('categories', CategoryController::class);
+
+Route::get('users/view-pdf', [UserController::class, 'viewPDF'])->name('view-pdf');
+Route::get('users/download-pdf', [UserController::class, 'downloadPDF'])->name('download-pdf');
+
 
