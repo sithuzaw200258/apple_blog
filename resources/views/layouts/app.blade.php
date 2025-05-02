@@ -28,7 +28,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary shadow-sm py-1">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <i class="bi bi-apple me-1"></i> Apple Blog
@@ -63,28 +63,31 @@
                         @endguest
                         @auth
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle text-white" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} ({{ Auth::user()->role }})
+                                <a id="navbarDropdown"  class="nav-link dropdown-toggle text-white" href="#"
+                                    role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                    v-pre>
+                                    <span title="{{ ucfirst(Auth::user()->role) }}">{{ Auth::user()->name }}</span>
+                                    
+                                    <img src="{{ asset('mboy.jpg') }}" alt="User Photo" class="profile-image ms-2">
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('welcome') }}">
-                                            <i class="bi bi-house-door me-1"></i> Go To Welcome Page
-                                        </a>
+                                    <a class="dropdown-item" href="{{ route('welcome') }}">
+                                        <i class="bi bi-house-door me-1"></i> Go To Welcome Page
+                                    </a>
 
-                                        <hr class="dropdown-divider">
-                    
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
+                                    <hr class="dropdown-divider">
+
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
-                                            <i class="bi bi-box-arrow-right me-1"></i>{{ __('Logout') }}
-                                        </a>
-    
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
-                                    
+                                        <i class="bi bi-box-arrow-right me-1"></i>{{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+
                                 </div>
                             </li>
                         @endauth
@@ -111,12 +114,13 @@
         </main>
     </div>
 
-    @stack('script')
     @if (session('status'))
-        <script type="module">
-            showToast("{{ session('status') }}")
+    <script type="module">
+        showToast("{{ session('status') }}")
         </script>
     @endif
+    
+    @stack('script')
 </body>
 
 </html>

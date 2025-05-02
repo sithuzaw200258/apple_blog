@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary py-1">
     <div class="container">
         <a class="navbar-brand" href="{{ route('welcome') }}"><i class="bi bi-apple me-1"></i> Apple Blog</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -16,7 +16,7 @@
                             <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 {{ Auth::user()->name }}
-                                <img src="{{ asset('mboy.jpg') }}" alt="User Photo" class="profile-image ms-2">
+                                <img src="{{ asset('mboy.jpg') }}" alt="Profile Photo" class="profile-image ms-2">
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
